@@ -6,8 +6,6 @@ import {
 import { XMLParser } from 'fast-xml-parser';
 import { CompanyDto } from './companies/dto/company.dto';
 
-// import { CompanyDto } from './companies/dto/company.dto';
-
 @Injectable()
 export class CompaniesService {
   async getCompany(id: number): Promise<CompanyDto> {

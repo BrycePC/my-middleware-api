@@ -1,0 +1,43 @@
+@startuml companies-api-sequence
+!theme plain
+
+actor Client
+participant "CompaniesController" as Controller
+participant "CompaniesService" as Service
+participant "XMLParser" as Parser
+participant "External XML API" as API
+
+Client -> Controller: GET /v1/companies/{id}
+activate Controller
+
+Controller -> Service: getCompany(id)
+activate Service
+
+Service -> API: fetch(url)
+activate API
+
+alt 404 Not Found
+    API --> Service: 404 response
+    Service --> Controller: NotFoundException
+    Controller --> Client: 404 Not Found
+else 500 Server Error
+    API --> Service: 5xx response
+    Service --> Controller: InternalServerErrorException
+    Controller --> Client: 500 Internal Server Error
+else Success
+    API --> Service: 200 XML response
+    deactivate API
+    
+    Service -> Parser: parse(xml)
+    activate Parser
+    Parser --> Service: JSON object
+    deactivate Parser
+    
+    Service --> Controller: CompanyDto
+    deactivate Service
+    
+    Controller --> Client: 200 JSON response
+    deactivate Controller
+end
+
+@enduml
