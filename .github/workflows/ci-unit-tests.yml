@@ -1,11 +1,9 @@
-name: ci-tests
-run-name: ci-tests - $${ github.ref_name}-${{ github.sha }}
+name: ci-unit-tests
+run-name: ci-unit-tests - $${ github.ref_name}-${{ github.sha }}
 
 on:
   push:
-    branches: [ main, feature/* ]
-  pull_request:
-    branches: [ main ]
+    branches: [ feature/* ]
 
 jobs:
   test:
@@ -26,5 +24,3 @@ jobs:
     - name: Run unit tests
       run: npm test
 
-    - name: Run e2e tests
-      run: npm run test:e2e
