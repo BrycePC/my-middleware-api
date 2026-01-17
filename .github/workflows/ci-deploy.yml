@@ -1,5 +1,5 @@
 name: ci-manual-deploy
-run-name: ci-manual-deploy - $${ github.ref_name}-${{ github.sha }}
+run-name: ci-manual-deploy - ${{ github.ref_name }}-${{ github.sha }}
 
 on:
   workflow_dispatch:
