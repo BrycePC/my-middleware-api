@@ -3,15 +3,17 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { XMLParser } from 'fast-xml-parser';
-import { CompanyDto } from './companies/dto/company.dto';
-
-// import { CompanyDto } from './companies/dto/company.dto';
+import { CompanyDto } from './dto/company.dto';
 
 @Injectable()
 export class CompaniesService {
+  constructor(private configService: ConfigService) {}
+
   async getCompany(id: number): Promise<CompanyDto> {
-    const url = `https://raw.githubusercontent.com/MiddlewareNewZealand/evaluation-instructions/main/xml-api/${id}.xml`;
+    const baseUrl = this.configService.get<string>('XML_API_BASE_URL');
+    const url = `${baseUrl}/${id}.xml`;
 
     try {
       const response = await fetch(url);
@@ -33,10 +35,7 @@ export class CompaniesService {
 
       const parser = new XMLParser();
       const parsed = parser.parse(xml as string) as { Data: CompanyDto };
-      const json = parsed.Data;
-      console.log(json);
-
-      return json;
+      return parsed.Data;
     } catch (error) {
       if (
         error instanceof NotFoundException ||
