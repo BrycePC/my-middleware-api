@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { ConfigService } from '@nestjs/config';
 import { CompaniesController } from './companies.controller';
-import { CompaniesService } from '../companies.service';
+import { CompaniesService } from './companies.service';
 import { CompanyDto } from './dto/company.dto';
 import * as path from 'path';
 import jestOpenAPI from 'jest-openapi';
@@ -13,7 +14,20 @@ describe('CompaniesController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [CompaniesController],
-      providers: [CompaniesService],
+      providers: [
+        CompaniesService,
+        {
+          provide: ConfigService,
+          useValue: {
+            get: jest.fn((key: string) => {
+              if (key === 'XML_API_BASE_URL') {
+                return 'https://raw.githubusercontent.com/MiddlewareNewZealand/evaluation-instructions/main/xml-api';
+              }
+              return null;
+            }),
+          },
+        },
+      ],
     }).compile();
 
     companiesController = app.get<CompaniesController>(CompaniesController);

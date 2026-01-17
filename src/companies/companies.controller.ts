@@ -1,5 +1,5 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
-import { CompaniesService } from '../companies.service';
+import { CompaniesService } from './companies.service';
 import { CompanyDto } from './dto/company.dto';
 
 @Controller('v1/companies')
