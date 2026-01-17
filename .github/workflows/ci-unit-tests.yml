@@ -1,5 +1,5 @@
 name: ci-unit-tests
-run-name: ci-unit-tests - $${ github.ref_name}-${{ github.sha }}
+run-name: ci-unit-tests - ${{ github.ref_name }}-${{ github.sha }}
 
 on:
   push:
