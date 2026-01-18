@@ -2,7 +2,15 @@
 
 ## Description
 A sample approach for implementing an XML-to-JSON API proxy server with a single REST HTTP endpoint using NestJS with NodeJS/Typescript,
-for evaluation. Initial scaffolding of the application was also provided by NestJS (via )
+for evaluation. Initial scaffolding of the application was also provided by NestJS (via running: <i>nest new my-middleware-api</i>, selecting npm as package manager)
+
+OpenAPI specifications have been provided to define the HTTP endpoints - including request and response structures, for both the client-facing
+JSON-based endpoint, and the XML-based endpoint that it proxies to, as per the following:
+
+1. openapi-companies.yaml (JSON)
+2. openapi-xml.yaml (backend, XML)
+
+#### Of note: with the exception of their different syntax and error response definitions, request and response structures defined in the specifications are the same. The implemented solution assumes this will remain so into the future, to allow use of automated response type conversions (using fast-xml-parser).  
 
 The following diagram illustrates its behaviour:
 
