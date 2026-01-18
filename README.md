@@ -56,6 +56,11 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+### GitHub Actions test
+GitHub actions workflows have also been configured for this project to run tests as per:
+1. Unit tests - On pushing changes to any feature/* branch
+2. E2E (integraetion) tests - On creating a Pull Request
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
