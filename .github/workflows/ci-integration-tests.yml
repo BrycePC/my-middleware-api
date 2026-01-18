@@ -22,4 +22,8 @@ jobs:
       run: npm ci
 
     - name: Run e2e tests
+      env:
+        # Adding here as .env config file should not be (is in .gitignore file) in Git.
+        XML_API_BASE_URL: https://raw.githubusercontent.com/MiddlewareNewZealand/evaluation-instructions/main/xml-api
+        PORT: 3000
       run: npm run test:e2e
