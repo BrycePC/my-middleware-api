@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Header } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { CompanyDto } from './dto/company.dto';
 
@@ -7,13 +7,8 @@ export class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
   @Get(':id')
+  @Header('Cache-Control', 'public, max-age=300')
   getCompany(@Param('id', ParseIntPipe) id: number): Promise<CompanyDto> {
-    // The following block is added here only to support integration test cases.
-    if (id < 0 && process.env.NODE_ENV === 'test') {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return JSON.parse(`{ "id": "TEST INVALID FORMAT" }`);
-    }
-
     return this.companiesService.getCompany(id);
   }
 }
